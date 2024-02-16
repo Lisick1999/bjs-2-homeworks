@@ -98,18 +98,6 @@ class Student {
         this.marks = {};
     }
     
-
-    // addMark(marks, lesson) {
-    //     if (marks >= 2 && marks <= 5) {
-    //         if(this.marks[lesson] === undefined) {
-    //             this.marks[lesson] = [];
-    //         }
-    //         return this.marks[lesson].push(mark);
-    //     } else {
-    //         return console.log("Значение ошибочно");
-    //     }
-    // }
-
     addMark(mark, lesson) {
         if(mark >= 2 && mark <= 5) {
             if(this.marks[lesson] === undefined) {
@@ -121,15 +109,6 @@ class Student {
         }
     }
 
-    // getAverageBySubject(lesson) {
-    //     if (this.marks[lesson] === undefined) {
-    //         return 0;
-    //     } else {
-    //         let summ = this.marks[lesson].reduce((acc, mark) => acc + mark, 0);
-    //         let avg = summ / this.marks[lesson].length;
-    //         return avg;
-    //     }
-    // }
     getAverageBySubject(lesson) {
         if(this.marks[lesson] === undefined) {
             return 0;
