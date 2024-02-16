@@ -78,23 +78,15 @@ class Library {
     }
 
     findBookBy(type, value) {
-        for (let book of this.books) {
-            if (book[type] === value) {
-                return book;
-            }
-        }
-        return null;
+        const findResult = this.books.find((item) => item[type] === value);
+        return findResult || null;
     }
 
     giveBookByName(bookName) {
-        for (let i = 0; i < this.books.length; i++) {
-            if (this.books[i].name === bookName) {
-              let bookDelete = this.books[i];
-              this.books.splice(i, 1);
-              return bookDelete;
-            }
-        }
-        return null;
+        const book = this.findBookBy("name", bookName);
+        if (!book) return null;
+        this.books = this.books.filter((item) => item.name !== bookName);
+        return book;
     }
 }
 
@@ -103,28 +95,65 @@ class Library {
 class Student {
     constructor(name) {
         this.name = name;
-        this.scores = {};
+        this.marks = {};
     }
     
 
-    addMark(scores, lesson) {
-        if (scores >= 2 && scores <= 5) {
-            if(this.scores[lesson] === undefined) {
-                this.scores[lesson] = [];
+    // addMark(marks, lesson) {
+    //     if (marks >= 2 && marks <= 5) {
+    //         if(this.marks[lesson] === undefined) {
+    //             this.marks[lesson] = [];
+    //         }
+    //         return this.marks[lesson].push(mark);
+    //     } else {
+    //         return console.log("Значение ошибочно");
+    //     }
+    // }
+
+    addMark(mark, lesson) {
+        if(mark >= 2 && mark <= 5) {
+            if(this.marks[lesson] === undefined) {
+                 this.marks[lesson] = [];
             }
-            return this.scores[lesson].push(scor);
+            return this.marks[lesson].push(mark);
         } else {
-            return console.log("Значение ошибочно");
+            return console.log("Оценка несоответствует значениям");
         }
     }
 
+    // getAverageBySubject(lesson) {
+    //     if (this.marks[lesson] === undefined) {
+    //         return 0;
+    //     } else {
+    //         let summ = this.marks[lesson].reduce((acc, mark) => acc + mark, 0);
+    //         let avg = summ / this.marks[lesson].length;
+    //         return avg;
+    //     }
+    // }
     getAverageBySubject(lesson) {
-        if (this.scores[lesson] === undefined) {
+        if(this.marks[lesson] === undefined) {
             return 0;
         } else {
-            let summ = this.scores[lesson].reduce((acc, scor) => acc + scor, 0);
-            let avg = summ / this.scores[lesson].length;
+            let summ = this.marks[lesson].reduce((acc, mark) => acc + mark, 0);
+            let avg = summ / this.marks[lesson].length;
             return avg;
+        }
+    }
+
+    getAverage() {
+        let lesson = Object.keys(this.marks);
+        let sumAverageMarks = 0;
+        let totalLesson = 0;
+        for(let subject of lesson) {
+            let averageMark = this.getAverageBySubject(subject);
+            sumAverageMarks += averageMark;
+            totalLesson++;
+        }
+
+        if(totalLesson === 0) {
+            return 0
+        } else {
+            return sumAverageMarks / totalLesson;
         }
     }
 }
